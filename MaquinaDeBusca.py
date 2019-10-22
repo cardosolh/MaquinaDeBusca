@@ -68,7 +68,7 @@ def ImagemOuVideo(arquivo):
         return False
 
 
-def percorreBancoDeImagens(template, similaridadeMinima):
+def percorreBancoDeImagens(template, similaridadeMinima, quantidadeRetornos):
     bancoDeImagens = 'imagem'
     methods = ['cv2.TM_CCOEFF_NORMED']
     matches = []
@@ -85,13 +85,16 @@ def percorreBancoDeImagens(template, similaridadeMinima):
                     similaridadeMinima, img, template, method, meth)
 
                 if similaridade >= similaridadeMinima:
-                    aux = "{}-AFrame{}".format(arquivo, similaridade)
+                    aux = "Imagem: {} / Similaridade: {}".format(
+                        arquivo, similaridade)
                     matches.append((aux, similaridade))
             # else:
 
+    # Ordena lista por similaridade
     matches.sort(key=lambda x: x[1], reverse=True)
 
-    print(*matches, sep='\n')
+    # Imprime lista
+    print(*matches[:quantidadeRetornos], sep='\n')
 
 
 def afereSimilaridade(similaridadeMinima, img, template, method, meth):
@@ -104,16 +107,18 @@ def afereSimilaridade(similaridadeMinima, img, template, method, meth):
     return similaridade
 
 
-def busca(arquivoTemplate, similaridadeMinima):
+def busca(arquivoTemplate, similaridadeMinima, quantidadeRetornos):
 
     if ImagemOuVideo(arquivoTemplate):
         template = cv2.imread(arquivoTemplate, 0)
-        percorreBancoDeImagens(template, similaridadeMinima)
+        percorreBancoDeImagens(
+            template, similaridadeMinima, quantidadeRetornos)
 
     # else:
 
 
 arquivoTemplate = 'imagem/serie_face_4.jpg'
 similaridadeMinima = 0.5
+quantidadeRetornos = 3
 
-busca(arquivoTemplate, similaridadeMinima)
+busca(arquivoTemplate, similaridadeMinima, quantidadeRetornos)
