@@ -83,8 +83,15 @@ def percorreBancoDeImagens(template, similaridadeMinima):
                 img2 = img.copy()
                 similaridade = afereSimilaridade(
                     similaridadeMinima, img, template, method, meth)
-                print("{}-AFrame{}".format(arquivo, similaridade))
+
+                if similaridade >= similaridadeMinima:
+                    aux = "{}-AFrame{}".format(arquivo, similaridade)
+                    matches.append((aux, similaridade))
             # else:
+
+    matches.sort(key=lambda x: x[1], reverse=True)
+
+    print(*matches, sep='\n')
 
 
 def afereSimilaridade(similaridadeMinima, img, template, method, meth):
