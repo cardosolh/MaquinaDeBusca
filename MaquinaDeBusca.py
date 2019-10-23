@@ -138,10 +138,18 @@ def busca(arquivoTemplate, similaridadeMinima, quantidadeRetornos):
         percorreBancoDeImagens(
             template, similaridadeMinima, quantidadeRetornos)
 
-    # else:
+    else:
+        cap = cv2.VideoCapture(arquivoTemplate, 0)
+        while (cap.isOpened()):
+            ret, template = cap.read()
+            if ret == True:
+                gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+                img = gray.copy()
+                percorreBancoDeImagens(
+                    img, similaridadeMinima, quantidadeRetornos)
 
 
-arquivoTemplate = 'imagem/serie_face_4.jpg'
+arquivoTemplate = 'HardhomeResume.mp4'
 similaridadeMinima = 0.5
 quantidadeRetornos = 15
 
