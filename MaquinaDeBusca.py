@@ -62,9 +62,11 @@ from matplotlib import pyplot as plt
 
 
 def ImagemOuVideo(arquivo):
-    if arquivo.endswith('.jpg'):
+    extencoesVideo = set(['.mp4', '.avi', '.mpeg'])
+    extencoesImagem = set(['.jpg', '.png', '.bmp'])
+    if arquivo.endswith(tuple(extencoesImagem)):
         return True
-    elif arquivo.endswith('.mp4'):
+    elif arquivo.endswith(tuple(extencoesVideo)):
         return False
 
 
@@ -88,7 +90,29 @@ def percorreBancoDeImagens(template, similaridadeMinima, quantidadeRetornos):
                     aux = "Imagem: {} / Similaridade: {}".format(
                         arquivo, similaridade)
                     matches.append((aux, similaridade))
-            # else:
+
+            else:
+                cap = cv2.VideoCapture(
+                    '{}/{}'.format(bancoDeImagens, arquivo), 0)
+                i = 0
+                while (cap.isOpened()):
+                    ret, frame = cap.read()
+
+                    if ret == True:
+                        i += 1
+                        nomeFrame = "{} / Frame: {}".format(arquivo, i)
+                        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                        img = gray.copy()
+                        similaridade = afereSimilaridade(
+                            similaridadeMinima, img, template, method, meth)
+
+                        if similaridade >= similaridadeMinima:
+                            aux = "Video: {} / Similaridade: {}".format(
+                                nomeFrame, similaridade)
+                            matches.append((aux, similaridade))
+
+                    else:
+                        break
 
     # Ordena lista por similaridade
     matches.sort(key=lambda x: x[1], reverse=True)
@@ -119,6 +143,6 @@ def busca(arquivoTemplate, similaridadeMinima, quantidadeRetornos):
 
 arquivoTemplate = 'imagem/serie_face_4.jpg'
 similaridadeMinima = 0.5
-quantidadeRetornos = 3
+quantidadeRetornos = 15
 
 busca(arquivoTemplate, similaridadeMinima, quantidadeRetornos)
