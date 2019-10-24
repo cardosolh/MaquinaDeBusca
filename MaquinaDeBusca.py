@@ -4,63 +4,6 @@ import os
 from matplotlib import pyplot as plt
 
 
-# def setSimilaridadeMinima():
-#     print('informe a similaridade mínima desejada \n(mínima: 0.01 e máxima: 1.00)')
-#     similaridade_minima = input()
-
-#     return similaridade_minima
-
-
-# def setQuantidadeObjetos():
-#     print('informe a quantidade de objetos que deseja retornar \n(mínimo: 1)')
-#     quantidade_objetos = input()
-
-#     return quantidade_objetos
-
-
-# def busca(query, similaridade_minima, quantidade_objetos):
-#     similaridade_minima = setSimilaridadeMinima()
-#     quantidade_objetos = setQuantidadeObjetos()
-#     caminho_banco_de_imagens = 'imagem'
-#     query = "serie_face_4.jpg"
-
-
-#     # Quando o Template é uma imagem
-#     if query.endswith(".jpg"):
-#         template = cv2.imread(query, 0)
-#         buscaImagem(query)
-
-# def buscaImagem(template, base_dados):
-#     w, h = template.shape[::-1]
-#     methods = ['cv2.TM_CCOEFF_NORMED']
-
-#     for meth in methods:
-#         img = img2.copy()
-#         method = eval(meth)
-#         for arquivo in os.listdir(base_dados):
-#             if arquivo.endswith(".jpg"):
-#                 catual = "{}-CImagem".format(arquivo)
-#                 img = cv2.imread('{}/{}'.format(base_dados, arquivo), 0)
-#                 img2 = img.copy()
-#                 buscaSimilaridade(img, template, method, meth)
-
-
-# def buscaSimilaridade(img, template, method, meth, similaridade_minima):
-#     res = cv2.matchTemplate(img,template,method)
-
-#         #Recupera a similaridade entre o template e o conteúdo da Imagem de busca
-#         min_val, similaridade, min_loc, max_loc = cv2.minMaxLoc(res)
-#         texto = 'Similaridade com {0} entre Imagens é {1}%'.format(meth,round(similaridade*100,2))
-
-#         resultado = []
-
-#         if similaridade > similaridade_minima:
-#             resultado.append((self.tatual, self.catual, similaridade))
-
-
-# resultado = []
-
-
 def ImagemOuVideo(arquivo):
     extencoesVideo = set(['.mp4', '.avi', '.mpeg'])
     extencoesImagem = set(['.jpg', '.png', '.bmp'])
